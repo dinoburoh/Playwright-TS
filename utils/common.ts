@@ -6,22 +6,24 @@ import { expect, Page } from "@playwright/test";
 * @param args Arguments, needs to be placed properly in the string.
 */
 export const stringFormat = (str: string, ...args: any[]) =>
-   str.replace(/{(\d+)}/g, (match, index) => args[index].toString() || "");
+	str.replace(/{(\d+)}/g, (match, index) => args[index].toString() || "");
 
 export async function waitUntilAppIdle(page: Page) {
-   // eslint-disable-next-line no-restricted-syntax
-   try {
-      await page.waitForFunction(() => (window as any).UCWorkBlockTracker?.isAppIdle());
-   } catch (e: any) {
-      console.log("waitUntilIdle failed, ignoring.., error: " + e?.message);
-   }
+	// eslint-disable-next-line no-restricted-syntax
+	try {
+		await page.waitForFunction(() => (window as any).UCWorkBlockTracker?.isAppIdle());
+	} catch (e: any) {
+		console.log("waitUntilIdle failed, ignoring.., error: " + e?.message);
+	}
 }
 
-export async function navigateToApps(page: Page, appId: string, appName:string){
-   console.log('Navigate to ' + appName.toString() + ' - Start');
-   await page.goto('/main.aspx?appid=' + appId.toString() + '&pagetype=control&controlName=MscrmControls.AcceleratedSales.AnchorShellControl');
-   await expect(page.getByRole('button', { name: appName })).toBeTruthy();
-   console.log('Navigated to ' +  appName.toString() + '- Success');
+export async function navigateToApps(page: Page, appId: string, appName: string) {
+	console.log('Navigate to ' + appName.toString() + ' - Start');
+	console.log(appId.toString());
+	//    await page.goto('/main.aspx?appid=' + appId.toString() + '&pagetype=control&controlName=MscrmControls.AcceleratedSales.AnchorShellControl');
+	await page.goto('https://org1e1ce0b9.crm8.dynamics.com/main.aspx?appid=ed54a927-6cac-ee11-a569-000d3a0a75a6&pagetype=control&controlName=MscrmControls.AcceleratedSales.AnchorShellControl');
+	await expect(page.getByRole('button', { name: appName })).toBeTruthy();
+	console.log('Navigated to ' + appName.toString() + '- Success');
 }
 
 /**
@@ -37,7 +39,7 @@ export const sleep = (seconds: any) => new Promise((resolve) => setTimeout(resol
 export async function waitForGlobalComamndBarLoad(page: Page) {
 	// await page.waitForSelector(CommandBarGlobalButtonsSelectors.CommandBarSelector);
 	// Wait for command buttons to be stable (Wait for last loading element).
-//    await page.waitForSelector(CommandBarGlobalButtonsSelectors.AccountManager);
+	//    await page.waitForSelector(CommandBarGlobalButtonsSelectors.AccountManager);
 }
 /**
  * Expand global quick create flyout.

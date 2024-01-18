@@ -12,6 +12,9 @@ async function globalSetup(config: FullConfig): Promise<void> {
   const { storageState } = config.projects[0].use;
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
+  await page.evaluate(() => {
+    document.body.style.transform = 'scale(0.75)'
+  })
   await login(page, orgurl as string, username, password);
   await page.context().storageState({
     path: authFile,
