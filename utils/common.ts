@@ -1,4 +1,4 @@
-import { expect, Page } from "@playwright/test";
+import { Browser, expect, Page } from "@playwright/test";
 // import {  CommandBarGlobalButtonsSelectors, FormSelectors} from "../selectors/caseCRUDSelectors.json";
 
 /* String format.
@@ -17,12 +17,34 @@ export async function waitUntilAppIdle(page: Page) {
 	}
 }
 
+export const delay = (ms: any) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function navigateToApps(page: Page, appId: string, appName: string) {
 	console.log('Navigate to ' + appName.toString() + ' - Start');
-	console.log(appId.toString());
-	//    await page.goto('/main.aspx?appid=' + appId.toString() + '&pagetype=control&controlName=MscrmControls.AcceleratedSales.AnchorShellControl');
-	await page.goto('https://org1e1ce0b9.crm8.dynamics.com/main.aspx?appid=ed54a927-6cac-ee11-a569-000d3a0a75a6&pagetype=control&controlName=MscrmControls.AcceleratedSales.AnchorShellControl');
-	await expect(page.getByRole('button', { name: appName })).toBeTruthy();
+	// const context = await browser.newContext();
+	// const page = await browser.newPage();
+	// await page.waitForTimeout(10000);
+	// expect(page.getByText('Sales Hub')).toBeVisible();
+	// const salesHubPage = await page.locator('//a[@title = \'Sales Hub\']').getAttribute('href');
+	
+	// await page.pause();
+	// let promisePage = page.context().waitForEvent('page', p => p.url() == `${salesHubPage}`);
+	// await page.click('//a[@title = \'Sales Hub\']', { modifiers: ['Control'] });
+	
+	page.goto('https://org1e1ce0b9.crm8.dynamics.com/main.aspx?appid=' + appId.toString());
+	
+	// await page.waitForTimeout(5000);
+	
+	// const newPage = await promisePage;
+	// await newPage.waitForLoadState();
+	// await newPage.bringToFront();
+
+	// const [newPage] = await Promise.all([
+	// 	context.waitForEvent('page'),
+	// 	page.evaluate((salesHubPage) => window.open(salesHubPage, '_blank'), salesHubPage)]);
+
+	// await page.goto('https://org1e1ce0b9.crm8.dynamics.com/main.aspx?appid=ed54a927-6cac-ee11-a569-000d3a0a75a6');
+	expect(page.getByRole('button', { name: appName })).toBeTruthy();
 	console.log('Navigated to ' + appName.toString() + '- Success');
 }
 

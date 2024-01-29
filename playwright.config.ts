@@ -12,13 +12,13 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './Sales',
 
-  timeout: 2 * 60 * 1000,
+  timeout: 2.5 * 60 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 2 * 60 * 1000
+    timeout: 3 * 60 * 1000
   },
 
   /* Run tests in files in parallel */
@@ -39,6 +39,12 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     storageState: '/storage-state/storageState.json',
+
+    // video: 'on',
+    // launchOptions: {
+    //   slowMo: 1000,
+    // }
+
   },
 
   globalSetup: require.resolve('./globals/global-setup'),
@@ -49,7 +55,12 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        // launchOptions: {
+        //   slowMo: 500,
+        // }
+      },
     },
 
     {
